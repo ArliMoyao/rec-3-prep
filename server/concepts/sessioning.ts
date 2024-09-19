@@ -19,6 +19,13 @@ export default class SessioningConcept {
   start(session: SessionDoc, username: string) {
     // In Express, the session is created spontaneously when the connection is first made, so we do not need
     // to explicitly allocate a session; we only need to keep track of the user.
+  
+    if (session.user !=undefined) {
+      throw new UnauthenticatedError("User is already logged in!");
+    }
+
+    this.isLoggedIn(session);
+    session.user = username; 
 
     // TODO: Make sure the user is logged out before allowing a new session to start.
     // Hint: Take a look at how the "end" function makes sure the user is logged in. Keep in mind that a
